@@ -13,6 +13,7 @@ from multiprocessing import pool, cpu_count
 
 DEFAULT_WOKERS = cpu_count()
 
+
 @dataclass
 class SnoozeMatch:
     path: Path
@@ -30,7 +31,6 @@ class SnoozeMatch:
 
 
 class SnoozeParser:
-
     @staticmethod
     def _file_ext(p: Path) -> Optional[str]:
         if p.is_dir() or "." not in p.name:
@@ -51,7 +51,9 @@ class SnoozeParser:
         return re.compile(f"^.*{comment}\s?snooze:\s?({iso_8601_charset})")
 
     @classmethod
-    def _matches_in_file(cls, path: Path, now: datetime, root: Path) -> Iterable[SnoozeMatch]:
+    def _matches_in_file(
+        cls, path: Path, now: datetime, root: Path
+    ) -> Iterable[SnoozeMatch]:
         regex = cls._mk_snooze_regex(cls._file_ext(path))
         for i, line in enumerate(path.read_text().splitlines()):
             match = regex.match(line)
@@ -62,13 +64,17 @@ class SnoozeParser:
                     if time >= now:
                         yield SnoozeMatch(path.relative_to(root), line, i, time)
                 except ValueError:
-                    logging.warning(f'Could not parse time "{timestr}" in {path.as_posix()}:{i}')
+                    logging.warning(
+                        f'Could not parse time "{timestr}" in {path.as_posix()}:{i}'
+                    )
 
     @classmethod
-    def search_all_files(cls,
-                         root_dir: Path,
-                         now: datetime = datetime.now(),
-                         processes: int = DEFAULT_WOKERS) -> Iterable[SnoozeMatch]:
+    def search_all_files(
+        cls,
+        root_dir: Path,
+        now: datetime = datetime.now(),
+        processes: int = DEFAULT_WOKERS,
+    ) -> Iterable[SnoozeMatch]:
         fn = partial(cls._matches_in_file, now=now, root=root_dir)
         with pool.ThreadPool(processes) as p:
             for matches in p.imap(fn, cls._list_files(root_dir)):
