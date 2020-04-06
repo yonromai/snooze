@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable, Optional, Pattern, List
+from typing import Iterable, Optional, Pattern
 
 from snooze.comments import comments_by_ext
 from functools import lru_cache, partial
@@ -48,7 +48,7 @@ class SnoozeParser:
     def _mk_snooze_regex(file_ext: str) -> Pattern[str]:
         comment = comments_by_ext[file_ext]
         iso_8601_charset = r"[0-9\-:TWZ]+"
-        return re.compile(f"^.*{comment}\s?snooze:\s?({iso_8601_charset})")
+        return re.compile(rf"^.*{comment}\s?snooze:\s?({iso_8601_charset})")
 
     @classmethod
     def _matches_in_file(
