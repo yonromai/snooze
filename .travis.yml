@@ -8,7 +8,9 @@ jobs:
   include:
     - stage: style
       python: '3.6'
-      script: black --check .
+      script:
+      - black --check .
+      - flake8
     - stage: test
       python: '3.6'
     - stage: test
