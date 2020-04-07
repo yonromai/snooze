@@ -1,5 +1,6 @@
 init:
-	pip install -r requirements.txt
+	pip install pipenv --upgrade
+	pipenv install --dev
 
 check:
 	black --check .
