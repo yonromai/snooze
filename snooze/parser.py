@@ -22,7 +22,7 @@ class SnoozeMatch:
     line_nb: int
     time: datetime
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.path}:{self.line_nb} - {self.line}"
 
     def __lt__(self, other: "SnoozeMatch") -> bool:
