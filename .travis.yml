@@ -1,18 +1,12 @@
 language: python
-install:
-  - pip install -r requirements.txt
-script:
-  - pytest
+install: make
+script: make test
 cache: pip
 jobs:
   include:
     - stage: style
       python: '3.6'
-      script:
-      - black --check .
-      - flake8
-      - isort --check-only
-      - mypy .
+      script: make check
     - stage: test
       python: '3.6'
     - stage: test
