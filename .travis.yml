@@ -12,6 +12,7 @@ jobs:
       - black --check .
       - flake8
       - isort --check-only
+      - mypy .
     - stage: test
       python: '3.6'
     - stage: test
