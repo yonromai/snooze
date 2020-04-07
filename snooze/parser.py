@@ -3,13 +3,14 @@ import logging
 import re
 from dataclasses import dataclass
 from datetime import datetime
+from functools import lru_cache, partial
+from multiprocessing import cpu_count, pool
 from pathlib import Path
 from typing import Iterable, Optional, Pattern
 
-from snooze.comments import comments_by_ext
-from functools import lru_cache, partial
 from dateutil.parser import parse
-from multiprocessing import pool, cpu_count
+
+from snooze.comments import comments_by_ext
 
 DEFAULT_WOKERS = cpu_count()
 

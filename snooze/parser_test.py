@@ -2,8 +2,9 @@
 from datetime import datetime
 from pathlib import Path
 
-from snooze.parser import SnoozeParser, SnoozeMatch
 import pytest
+
+from snooze.parser import SnoozeMatch, SnoozeParser
 
 
 @pytest.fixture
