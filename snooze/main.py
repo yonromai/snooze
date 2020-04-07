@@ -5,9 +5,10 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
+
 from dateutil.parser import parse
 
-from snooze.parser import SnoozeParser, DEFAULT_WOKERS
+from snooze.parser import DEFAULT_WOKERS, SnoozeParser
 
 
 def main(directory: Path, time: datetime, processes: int) -> None:
