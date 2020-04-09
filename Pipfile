@@ -5,13 +5,15 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.10b0"
-dataclasses = "*"
 flake8 = "*"
 flake8-mypy = "*"
 isort = "*"
 mypy = "*"
 pytest = "*"
+setuptools = ">=40.0"
+setuptools-scm = "*"
 
 [packages]
 python-dateutil = "*"
 # snooze = {path = ".", editable = true}
+dataclasses = "*"
