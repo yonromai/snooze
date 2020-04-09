@@ -144,3 +144,4 @@ cython_debug/
 # Custom
 .idea
 .envrc
+__version__.py
