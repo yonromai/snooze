@@ -5,11 +5,13 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.10b0"
+codecov = "*"
 flake8 = "*"
 flake8-mypy = "*"
 isort = "*"
 mypy = "*"
 pytest = "*"
+pytest-cov = "*"
 setuptools = ">=40.0"
 setuptools-scm = "*"
 

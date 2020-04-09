@@ -9,6 +9,9 @@ jobs:
       script: make check
     - stage: test
       python: '3.6'
+      script:
+        - make test
+        - coverage
     - stage: test
       python: '3.7'
     - stage: test
