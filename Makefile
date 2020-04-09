@@ -13,4 +13,4 @@ autofix:
 	black .
 
 test:
-	pytest
+	pytest --cov=snooze
