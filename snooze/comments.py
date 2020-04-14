@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Mapping
 
 comments_by_ext: Mapping[str, str] = {

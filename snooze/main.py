@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import argparse
 import os
 import sys
@@ -12,7 +10,7 @@ from dateutil.parser import parse
 from snooze.parser import DEFAULT_WOKERS, SnoozeParser
 
 
-def parse_args(argv: List[str]) -> argparse.Namespace:  # FIXME
+def parse_args(argv: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Leave reminders in your code. Useful to set a timer on FIXMEs, TODOs & scheduled releases."
     )
@@ -61,7 +59,3 @@ def main(argv: List[str] = sys.argv) -> None:
         sys.exit(os.EX_DATAERR)
     print("No triggered snooze found.")
     sys.exit(os.EX_OK)
-
-
-if __name__ == "__main__":
-    main()

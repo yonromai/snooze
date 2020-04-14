@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import logging
 import re
 from dataclasses import dataclass
@@ -51,23 +50,30 @@ class SnoozeParser:
         iso_8601_charset = r"[0-9\-:TWZ]+"
         return re.compile(rf"^.*{comment}\s?snooze:\s?({iso_8601_charset})")
 
+    @staticmethod
+    def _try_parse_time(
+        regex: Pattern[str], line: str, path: Path, i: int
+    ) -> Optional[datetime]:
+        match = regex.match(line)
+        if match:
+            timestr = match.groups()[0]
+            try:
+                return parse(timestr)
+            except ValueError:
+                logging.warning(
+                    f'Could not parse time "{timestr}" in {path.as_posix()}:{i}'
+                )
+        return None
+
     @classmethod
     def _matches_in_file(
         cls, path: Path, now: datetime, root: Path
     ) -> Iterable[SnoozeMatch]:
         regex = cls._mk_snooze_regex(cls._file_ext(path))
         for i, line in enumerate(path.read_text().splitlines()):
-            match = regex.match(line)
-            if match:
-                timestr = match.groups()[0]
-                try:
-                    time = parse(timestr)
-                    if time >= now:
-                        yield SnoozeMatch(path.relative_to(root), line, i, time)
-                except ValueError:
-                    logging.warning(
-                        f'Could not parse time "{timestr}" in {path.as_posix()}:{i}'
-                    )
+            time = cls._try_parse_time(regex, line, path, i)
+            if time and time >= now:
+                yield SnoozeMatch(path.relative_to(root), line, i, time)
 
     @classmethod
     def search_all_files(
