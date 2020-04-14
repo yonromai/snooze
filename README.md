@@ -1,6 +1,12 @@
 # Snooze
 
+[![Build Status](https://travis-ci.com/yonromai/snooze.svg?branch=master)](https://travis-ci.com/github/yonromai/snooze)
+[![Code Coverage](https://codecov.io/gh/yonromai/snooze/branch/master/graph/badge.svg)](https://codecov.io/gh/yonromai/snooze)
+
+---
+
 Leave reminders in your code. Useful to set a timer on FIXMEs, TODOs & scheduled releases. 
+
 
 ## Example
 
