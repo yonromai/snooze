@@ -17,5 +17,5 @@ setuptools-scm = "*"
 
 [packages]
 python-dateutil = "*"
-# snooze = {path = ".", editable = true}
+snooze = {path = ".", editable = true}
 dataclasses = "*"
