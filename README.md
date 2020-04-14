@@ -25,7 +25,6 @@ foo.py
 ## TODO
 * Add bin entrypoint
 * Publish to Pypi
-* Display codecov.io reports
 * Fix `python3.7/site-packages is in the MYPYPATH. Please remove it.`
 * Add License headers
 * Moar test coverage
