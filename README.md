@@ -24,6 +24,5 @@ foo.py
 
 ## TODO
 * Publish to Pypi
-* Fix `python3.7/site-packages is in the MYPYPATH. Please remove it.`
 * Add License headers
 * add badges to README.md
