@@ -2,14 +2,7 @@
 from datetime import datetime
 from pathlib import Path
 
-import pytest
-
 from snooze.parser import SnoozeMatch, SnoozeParser
-
-
-@pytest.fixture
-def test_resources() -> Path:
-    return Path(__file__).parent / "test_resources"
 
 
 def test__file_ext() -> None:
