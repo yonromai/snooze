@@ -1,3 +1,5 @@
+all: autofix check test
+
 init:
 	pip install pipenv --upgrade
 	pipenv install --dev
@@ -9,8 +11,8 @@ check:
 	mypy .
 
 autofix:
-	isort
+	isort --apply
 	black .
 
 test:
-	pytest --cov=snooze
+	pytest --cov=snooze --cov-report=term --cov-report=html
