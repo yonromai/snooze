@@ -23,9 +23,7 @@ foo.py
 * Dates must be represented as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
 
 ## TODO
-* Add bin entrypoint
 * Publish to Pypi
 * Fix `python3.7/site-packages is in the MYPYPATH. Please remove it.`
 * Add License headers
-* Moar test coverage
 * add badges to README.md

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import logging
 from datetime import datetime
 from pathlib import Path
+
+from _pytest.logging import LogCaptureFixture
 
 from snooze.parser import SnoozeMatch, SnoozeParser
 
@@ -55,6 +58,26 @@ def test__matches_in_file(test_resources: Path) -> None:
     assert len(matches) == 0
 
 
+def test__try_parse_time(caplog: LogCaptureFixture) -> None:
+    regex = SnoozeParser._mk_snooze_regex("py")
+    time = SnoozeParser._try_parse_time(regex=regex, line="", path=Path("/dummy"), i=42)
+    assert time is None
+    time = SnoozeParser._try_parse_time(
+        regex=regex, line="foo # snooze: 1900-01-01", path=Path("/dummy"), i=42
+    )
+    assert time == datetime(1900, 1, 1)
+    # with pytest.warns(Warning, match=r"Could not parse time \"1900-33-33\""):
+    with caplog.at_level(logging.WARNING):
+        time = SnoozeParser._try_parse_time(
+            regex=regex, line="foo # snooze: 1900-33-33", path=Path("/dummy.py"), i=42
+        )
+        assert time is None
+        assert caplog.text.strip().startswith("WARNING  root:parser.py:")
+        caplog.text.strip().endswith(
+            'Could not parse time "1900-33-33" in /dummy.py:42'
+        )
+
+
 def test_search_all_files(test_resources: Path) -> None:
     matches = list(
         SnoozeParser.search_all_files(
@@ -95,3 +118,23 @@ def test_search_all_files(test_resources: Path) -> None:
             ),
         ]
     )
+
+
+def test_sort() -> None:
+    matches = [
+        SnoozeMatch(
+            path=Path("/path/2"), line="line1", line_nb=1, time=datetime(1900, 1, 1)
+        ),
+        SnoozeMatch(
+            path=Path("/path/1"), line="line2", line_nb=2, time=datetime(1900, 1, 1)
+        ),
+        SnoozeMatch(
+            path=Path("/path/1"), line="line1", line_nb=1, time=datetime(1900, 1, 1)
+        ),
+    ]
+    sorted_matches = sorted(matches)
+    assert [(m.path, m.line) for m in sorted_matches] == [
+        (Path("/path/1"), "line1"),
+        (Path("/path/1"), "line2"),
+        (Path("/path/2"), "line1"),
+    ]
