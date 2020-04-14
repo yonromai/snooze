@@ -72,7 +72,7 @@ class SnoozeParser:
         regex = cls._mk_snooze_regex(cls._file_ext(path))
         for i, line in enumerate(path.read_text().splitlines()):
             time = cls._try_parse_time(regex, line, path, i)
-            if time and time >= now:
+            if time and time <= now:
                 yield SnoozeMatch(path.relative_to(root), line, i, time)
 
     @classmethod
