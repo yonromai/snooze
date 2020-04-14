@@ -15,7 +15,7 @@ def argv() -> List[str]:
 def test_main_no_args(argv: List[str]) -> None:
     with pytest.raises(SystemExit) as e:
         main.main(argv)
-        assert e.value.code == os.EX_OK
+    assert e.value.code == os.EX_DATAERR
 
 
 def test_main_help(argv: List[str]) -> None:
@@ -30,10 +30,10 @@ def test_main_dir_no_files(argv: List[str], tmp_path: Path) -> None:
     assert e.value.code == os.EX_OK
 
 
-def test_main_dir_no_matches(argv: List[str], test_resources: Path) -> None:
+def test_main_dir_matches(argv: List[str], test_resources: Path) -> None:
     with pytest.raises(SystemExit) as e:
         main.main(argv + [test_resources.as_posix()])
-    assert e.value.code == os.EX_OK
+    assert e.value.code == os.EX_DATAERR
 
 
 def test_main_invaid_dir(argv: List[str]) -> None:
@@ -42,13 +42,13 @@ def test_main_invaid_dir(argv: List[str]) -> None:
     assert e.value.code == os.EX_USAGE
 
 
-def test_main_dir_matches(argv: List[str], test_resources: Path) -> None:
+def test_main_time(argv: List[str], test_resources: Path) -> None:
     with pytest.raises(SystemExit) as e:
-        main.main(argv + [test_resources.as_posix(), "--time=1900-01-01"])
-    assert e.value.code == os.EX_DATAERR
+        main.main(argv + [test_resources.as_posix(), "--time=1899-01-01"])
+    assert e.value.code == os.EX_OK
 
 
-def test_main_dir_threads(argv: List[str], test_resources: Path) -> None:
+def test_main_dir_threads(argv: List[str], tmp_path: Path) -> None:
     with pytest.raises(SystemExit) as e:
-        main.main(argv + ["--threads=1"])
+        main.main(argv + [tmp_path.as_posix(), "--threads=1"])
     assert e.value.code == os.EX_OK

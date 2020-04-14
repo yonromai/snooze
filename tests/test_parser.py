@@ -26,7 +26,7 @@ def test__matches_in_file(test_resources: Path) -> None:
     hw_py = test_resources / "hello_world.py"
     matches = list(
         SnoozeParser._matches_in_file(
-            hw_py, now=datetime(year=1899, month=12, day=31), root=test_resources
+            hw_py, now=datetime(year=1900, month=1, day=2), root=test_resources
         )
     )
     assert matches == [
@@ -52,7 +52,7 @@ def test__matches_in_file(test_resources: Path) -> None:
     ]
     matches = list(
         SnoozeParser._matches_in_file(
-            hw_py, now=datetime(year=1900, month=1, day=2), root=test_resources
+            hw_py, now=datetime(year=1899, month=12, day=31), root=test_resources
         )
     )
     assert len(matches) == 0

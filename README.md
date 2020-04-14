@@ -18,11 +18,9 @@ lib.broken_logic = my_fixed_logic # FIXME: remove when lib==0.42 gets released
 
 You can find the expired snoozes using the CLI:
 ```
-$ snooze .
-> 1 triggered snooze found:
-foo.py
-1:# snooze: 1900-01-01
-2-lib.broken_logic = my_fixed_logic # FIXME: remove when lib==0.42 gets released
+$ snooze
+Searching directory "." for snoozes
+foo.py:1 - #        snooze: 1900-01-01
 ```
 ## Notes
 * If matches are found, the CLI will return a non 0 exit code so it can be used in builds/precommit-hooks.

@@ -46,7 +46,7 @@ def main(argv: List[str] = sys.argv) -> None:
         print(f"ERROR: Could not find directory: {directory}")
         sys.exit(os.EX_USAGE)
 
-    print(f'Searching for snoozes in "{directory}"')
+    print(f'Searching directory "{directory}" for snoozes')
     found_matches = False
 
     for match in SnoozeParser.search_all_files(
