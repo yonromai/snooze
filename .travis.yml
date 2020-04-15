@@ -4,16 +4,23 @@ script: make test
 cache: pip
 jobs:
   include:
-    - stage: style
-      python: '3.6'
-      script: make check
-    - stage: test
-      python: '3.6'
-      script:
-        - make test
-        - coverage
-        - bash <(curl -s https://codecov.io/bash) # Upload coverage
-    - stage: test
-      python: '3.7'
-    - stage: test
-      python: '3.8'
+  - stage: style
+    python: '3.6'
+    script: make check
+  - stage: test
+    python: '3.6'
+    script:
+    - make test
+    - coverage
+    - bash <(curl -s https://codecov.io/bash)
+  - stage: test
+    python: '3.7'
+  - stage: test
+    python: '3.8'
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: PWFi482L7UDMRlLWyC1IrMhYr/c2n4Ef2HZXxn0S/gWWtJ60DcCHlWRCNpTPX7YwwdUPKJNeIBFtrUYGKR/6tCj8kJWZ2nLTr0Y3AIHEeaAxpO6TenqAcfB9jmBPc11Vl8b/xnSHHrPVa/yR/Mbd3nnEmebnSYbKzys4fEBoyWOeD4DmPpoQvVjrxVmPpMCdhkxtMZux+/z8HPSmUUa3nNddxLwkpWaNvcavkn6qqdA/90zscf0qAyoCh4zCTnPca1MPIEIzi/LnhFThK4u5b/vY1DPcHmHZC3y+CQqxJJ8VbEo6dGaWAs7hBzi7T8NwaXc6fTVetj/M1Gd+sVz+X1QjsA1Ku/hUzcNT8+SDK1aI/OLREWUd0d1tuLoJJ8OiS8tpPKv+7RBgeFVBh0sN+xi/klaULUeQwLYK9bp2vAL0Imv+WWgHCd6ArSNKH0MT/ujFEM+T1cIrXefoywoYXS/XXiPFLfBI0pTdGxuCrF8FfwkrOGwZg99+0K73EoAIuSOQYTD+7lIRKUC4q+ZebUBWFZJ3PKRs4/3Uu/5OnIORW68tEKtm/2aunO6pNrnAllGkUxfQYEGDF8vuT+MCqtc6Zv82Qmv7CDO+xzLo7TOnDwxoCXezk6C6loCjh088L9GL1oPfoD6vnbPTmm7e9Yr89xxxa/qmCBPXJ7i6o0U=
+  on:
+    tags: true
